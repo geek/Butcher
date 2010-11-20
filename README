@@ -1,0 +1,6 @@
+Butcher will send out requests to your network gateway that when intercepted by FireSheep will disable FireSheep.  It does this by employing the method created with FireShepherd, which is to send a cookie value that FireSheep is unable to parse.  The point of Butcher, however, is to send out fairly random requests to a variety of the handlers that FireSheep supports.  This makes it more difficult for a FireSheep user to filter out the Butcher traffic.
+
+It sends 1 request per second.  The requests are very minimal in size, only the http headers that FireSheep uses are sent.
+
+Install
+Simply download and run the exe.  It will detect your gateway IP and start sending requests to it that are intercepted by FireSheep.  
