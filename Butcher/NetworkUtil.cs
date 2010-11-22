@@ -11,6 +11,7 @@ namespace Butcher
 	public sealed class NetworkUtil
 	{
 		private IPAddress _gatewayAddress;
+		private object _padlock = new object();
 
 		NetworkUtil() { }
 
@@ -59,18 +60,22 @@ namespace Butcher
 			}
 		}
 
-		private IPAddress GetGatewayAddress()
+		public IPAddress GetGatewayAddress()
 		{
-			if (_gatewayAddress == null)
-				_gatewayAddress = GetNetworkInterfaceGatewayAddress();
+			lock (_padlock)
+			{
+				var nonIP = IPAddress.Parse("0.0.0.0");
+				if (_gatewayAddress == null || _gatewayAddress.Equals(nonIP))
+					_gatewayAddress = GetNetworkInterfaceGatewayAddress();
 
-			if (_gatewayAddress == null)
-				_gatewayAddress = GetFirstRouteAddress();
+				if (_gatewayAddress == null || _gatewayAddress.Equals(nonIP))
+					_gatewayAddress = GetFirstRouteAddress();
 
-			if (_gatewayAddress == null)
-				_gatewayAddress = Dns.GetHostEntry("google.com").AddressList[0];
+				if (_gatewayAddress == null || _gatewayAddress.Equals(nonIP))
+					_gatewayAddress = Dns.GetHostEntry("google.com").AddressList[0];
 
-			return _gatewayAddress;
+				return _gatewayAddress;
+			}
 		}
 
 		private IPAddress GetNetworkInterfaceGatewayAddress()
@@ -79,7 +84,7 @@ namespace Butcher
 			{
 				foreach (GatewayIPAddressInformation gatewayAddr in networkCard.GetIPProperties().GatewayAddresses)
 				{
-					if (gatewayAddr.Address == IPAddress.Parse("0.0.0.0"))
+					if (gatewayAddr.Address.Equals(IPAddress.Parse("0.0.0.0")))
 						continue;
 
 					return gatewayAddr.Address;

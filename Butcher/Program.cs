@@ -16,6 +16,7 @@ namespace Butcher
 
 		static void Main(string[] args)
 		{
+			NetworkUtil.Instance.GetGatewayAddress();
 			LoadHandlerPayloads();
 
 			Console.Write("Sending FireSheep kill requests, press any key to stop.");
