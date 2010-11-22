@@ -46,6 +46,9 @@
     <Compile Include="IFireSheepHandlerPayload.cs" />
     <Compile Include="NetworkUtil.cs" />
     <Compile Include="Payloads\FacebookHandlerPayload.cs" />
+    <Compile Include="Payloads\FlickrHandlerPayload.cs" />
+    <Compile Include="Payloads\GowallaHandlerPayload.cs" />
+    <Compile Include="Payloads\TwitterHandlerPayload.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

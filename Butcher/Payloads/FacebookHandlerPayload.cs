@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Butcher
+namespace Butcher.Payloads
 {
 	public class FacebookHandlerPayload : IFireSheepHandlerPayload
 	{
