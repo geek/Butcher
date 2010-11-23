@@ -16,7 +16,11 @@ namespace Butcher
 
 		static void Main(string[] args)
 		{
-			NetworkUtil.Instance.GetGatewayAddress();
+			IPAddress gatewayAddress = null;
+			if (args != null && args.Count() == 1)
+				gatewayAddress = IPAddress.Parse(args[0]);
+
+			NetworkUtil.Instance.GetGatewayAddress(gatewayAddress);
 			LoadHandlerPayloads();
 
 			Console.Write("Sending FireSheep kill requests, press any key to stop.");

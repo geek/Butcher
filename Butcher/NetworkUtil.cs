@@ -60,11 +60,14 @@ namespace Butcher
 			}
 		}
 
-		public IPAddress GetGatewayAddress()
+		public IPAddress GetGatewayAddress(IPAddress gatewayAddress = null)
 		{
 			lock (_padlock)
 			{
 				var nonIP = IPAddress.Parse("0.0.0.0");
+				if (_gatewayAddress == null || _gatewayAddress.Equals(nonIP))
+					_gatewayAddress = gatewayAddress;
+
 				if (_gatewayAddress == null || _gatewayAddress.Equals(nonIP))
 					_gatewayAddress = GetNetworkInterfaceGatewayAddress();
 
