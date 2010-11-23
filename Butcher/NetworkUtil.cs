@@ -80,16 +80,18 @@ namespace Butcher
 
 		private IPAddress GetNetworkInterfaceGatewayAddress()
 		{
-			foreach (NetworkInterface networkCard in NetworkInterface.GetAllNetworkInterfaces())
-			{
-				foreach (GatewayIPAddressInformation gatewayAddr in networkCard.GetIPProperties().GatewayAddresses)
+			if (NetworkInterface.GetAllNetworkInterfaces() != null)
+				foreach (NetworkInterface networkCard in NetworkInterface.GetAllNetworkInterfaces())
 				{
-					if (gatewayAddr.Address.Equals(IPAddress.Parse("0.0.0.0")))
-						continue;
+					if (networkCard != null && networkCard.GetIPProperties() != null && networkCard.GetIPProperties().GatewayAddresses != null)
+						foreach (GatewayIPAddressInformation gatewayAddr in networkCard.GetIPProperties().GatewayAddresses)
+						{
+							if (gatewayAddr.Address.Equals(IPAddress.Parse("0.0.0.0")))
+								continue;
 
-					return gatewayAddr.Address;
+							return gatewayAddr.Address;
+						}
 				}
-			}
 
 			return null;
 		}
